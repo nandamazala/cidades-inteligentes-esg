@@ -166,20 +166,22 @@ docker build -t cidades-esg-api:local .
 Resultado esperado: imagem Docker criada com sucesso.
 ```
 
-Evidências do pipeline:
+Evidências reais do pipeline no GitHub Actions:
 
-- Build automático: etapa `Build Release` no job `build-test`.
-- Testes automatizados: etapa `Testes automatizados` no job `build-test`.
-- Deploy staging: job `deploy-staging`, ambiente `staging`, endpoint `/health` validado e artefato `deploy-staging` publicado.
-- Deploy produção: job `deploy-production`, ambiente `production`, endpoint `/health` validado e artefato `deploy-production` publicado.
+- Execução completa do workflow: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977
+- Build e testes aprovados: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050128480
+- Build da imagem Docker aprovado: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050276202
+- Deploy staging aprovado com `/health`: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050468985
+- Deploy produção aprovado com `/health`: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050749386
 
-Após rodar o workflow no GitHub Actions, os prints recomendados para anexar são:
+Artefatos publicados pelo workflow:
 
-- Página geral do workflow concluído.
-- Job `build-test` mostrando build e testes aprovados.
-- Job `deploy-staging` mostrando validação do endpoint `/health`.
-- Job `deploy-production` mostrando validação do endpoint `/health`.
-- Lista de artefatos publicados, incluindo `test-results`, `docker-image`, `deploy-staging` e `deploy-production`.
+- `test-results`
+- `docker-image`
+- `deploy-staging`
+- `deploy-production`
+
+A pasta `evidencias` contém um resumo textual desses links e status em `github-actions-run.md`.
 
 As evidências finais também estão resumidas no PDF técnico entregue junto com este projeto.
 
