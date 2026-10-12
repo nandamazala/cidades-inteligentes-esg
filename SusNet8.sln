@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sus.Api", "src\Sus.Api\Sus.Api.csproj", "{A2D49E1F-23F1-4E0B-8D52-A32CB7C09F7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sus.Api.Tests", "tests\Sus.Api.Tests\Sus.Api.Tests.csproj", "{1E316C7D-95B1-4E71-8E13-2E1F46861E6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2D49E1F-23F1-4E0B-8D52-A32CB7C09F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D49E1F-23F1-4E0B-8D52-A32CB7C09F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D49E1F-23F1-4E0B-8D52-A32CB7C09F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D49E1F-23F1-4E0B-8D52-A32CB7C09F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E316C7D-95B1-4E71-8E13-2E1F46861E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E316C7D-95B1-4E71-8E13-2E1F46861E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E316C7D-95B1-4E71-8E13-2E1F46861E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E316C7D-95B1-4E71-8E13-2E1F46861E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

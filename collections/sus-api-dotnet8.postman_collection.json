@@ -1,0 +1,132 @@
+{
+  "info": {
+    "name": "SUS API .NET 8",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth - gerar token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/token"
+      }
+    },
+    {
+      "name": "Pacientes - listar paginado",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/pacientes?page=1&pageSize=10"
+      }
+    },
+    {
+      "name": "Pacientes - criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Maria Silva\",\n  \"cpf\": \"12345678901\",\n  \"email\": \"maria@email.com\",\n  \"telefone\": \"11999999999\"\n}"
+        },
+        "url": "{{baseUrl}}/pacientes"
+      }
+    },
+    {
+      "name": "Unidades de saude - listar paginado",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/unidades-saude?page=1&pageSize=10"
+      }
+    },
+    {
+      "name": "Unidades de saude - criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"UBS Central\",\n  \"endereco\": \"Rua Central, 100\",\n  \"capacidadeDiaria\": 50\n}"
+        },
+        "url": "{{baseUrl}}/unidades-saude"
+      }
+    },
+    {
+      "name": "Atendimentos - listar paginado",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/atendimentos?page=1&pageSize=10"
+      }
+    },
+    {
+      "name": "Atendimentos - criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pacienteId\": 1,\n  \"unidadeId\": 1,\n  \"status\": \"ABERTO\"\n}"
+        },
+        "url": "{{baseUrl}}/atendimentos"
+      }
+    },
+    {
+      "name": "Alertas - listar paginado",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/alertas?page=1&pageSize=10"
+      }
+    }
+  ]
+}

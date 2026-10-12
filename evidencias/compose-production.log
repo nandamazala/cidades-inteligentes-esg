@@ -1,0 +1,54 @@
+name: cidades-esg-production
+services:
+  api:
+    build:
+      context: C:\Users\Fernanda Mazala\Documents\Codex\2026-10-12\voc\work\sus-devops
+      dockerfile: Dockerfile
+    container_name: cidades-esg-api-production
+    depends_on:
+      sqlserver:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      AppUser__Password: admin123
+      AppUser__Username: admin
+      ConnectionStrings__DefaultConnection: Server=sqlserver,1433;Database=SusDbProduction;User
+        Id=sa;Password=Sus@123456;TrustServerCertificate=True
+      Jwt__Audience: Sus.Api
+      Jwt__Issuer: Sus.Api
+      Jwt__Secret: segredo-super-seguro-para-sus-api-dotnet-8
+    networks:
+      sus_network: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8082"
+        protocol: tcp
+  sqlserver:
+    container_name: cidades-esg-sqlserver-production
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_PID: Express
+      SA_PASSWORD: Sus@123456
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      sus_network: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "14332"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: sus_sqlserver_production
+        target: /var/opt/mssql
+        volume: {}
+networks:
+  sus_network:
+    name: cidades-esg-production_sus_network
+    driver: bridge
+volumes:
+  sus_sqlserver_production:
+    name: cidades-esg-production_sus_sqlserver_production

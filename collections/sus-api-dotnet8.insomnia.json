@@ -1,0 +1,145 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-06-13T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app",
+  "resources": [
+    {
+      "_id": "wrk_sus_dotnet8",
+      "_type": "workspace",
+      "name": "SUS API .NET 8"
+    },
+    {
+      "_id": "env_sus_dotnet8",
+      "_type": "environment",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Base Environment",
+      "data": {
+        "baseUrl": "http://localhost:8080",
+        "token": ""
+      }
+    },
+    {
+      "_id": "req_auth_token",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Auth - gerar token",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/auth/token",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+      }
+    },
+    {
+      "_id": "req_pacientes_listar",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Pacientes - listar paginado",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pacientes?page=1&pageSize=10"
+    },
+    {
+      "_id": "req_pacientes_criar",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Pacientes - criar",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pacientes",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Maria Silva\",\n  \"cpf\": \"12345678901\",\n  \"email\": \"maria@email.com\",\n  \"telefone\": \"11999999999\"\n}"
+      }
+    },
+    {
+      "_id": "req_unidades_listar",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Unidades de saude - listar paginado",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/unidades-saude?page=1&pageSize=10"
+    },
+    {
+      "_id": "req_unidades_criar",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Unidades de saude - criar",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/unidades-saude",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"UBS Central\",\n  \"endereco\": \"Rua Central, 100\",\n  \"capacidadeDiaria\": 50\n}"
+      }
+    },
+    {
+      "_id": "req_atendimentos_listar",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Atendimentos - listar paginado",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/atendimentos?page=1&pageSize=10"
+    },
+    {
+      "_id": "req_atendimentos_criar",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Atendimentos - criar",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/atendimentos",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"pacienteId\": 1,\n  \"unidadeId\": 1,\n  \"status\": \"ABERTO\"\n}"
+      }
+    },
+    {
+      "_id": "req_alertas_listar",
+      "_type": "request",
+      "parentId": "wrk_sus_dotnet8",
+      "name": "Alertas - listar paginado",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/alertas?page=1&pageSize=10",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    }
+  ]
+}

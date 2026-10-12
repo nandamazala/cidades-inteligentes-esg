@@ -1,0 +1,41 @@
+name: cidades-esg-inteligentes
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA:-Y}
+      SA_PASSWORD: ${SQLSERVER_PASSWORD:-Sus@123456}
+    ports:
+      - "${SQLSERVER_PORT:-1433}:1433"
+    volumes:
+      - sus_sqlserver:/var/opt/mssql
+    networks:
+      - sus_network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+      ASPNETCORE_URLS: ${ASPNETCORE_URLS:-http://+:8080}
+      ConnectionStrings__DefaultConnection: "Server=${SQLSERVER_HOST:-sqlserver},1433;Database=${SQLSERVER_DATABASE:-SusDb};User Id=${SQLSERVER_USER:-sa};Password=${SQLSERVER_PASSWORD:-Sus@123456};TrustServerCertificate=True"
+      Jwt__Issuer: ${JWT_ISSUER:-Sus.Api}
+      Jwt__Audience: ${JWT_AUDIENCE:-Sus.Api}
+      Jwt__Secret: ${JWT_SECRET:-segredo-super-seguro-para-sus-api-dotnet-8}
+      AppUser__Username: ${APP_USERNAME:-admin}
+      AppUser__Password: ${APP_PASSWORD:-admin123}
+    ports:
+      - "${API_PORT:-8080}:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - sus_network
+
+volumes:
+  sus_sqlserver:
+
+networks:
+  sus_network:
+    driver: bridge

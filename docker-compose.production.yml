@@ -1,0 +1,45 @@
+name: cidades-esg-production
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: cidades-esg-sqlserver-production
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA:-Y}
+      SA_PASSWORD: ${SQLSERVER_PASSWORD:-Sus@123456}
+      MSSQL_PID: Express
+    ports:
+      - "14332:1433"
+    volumes:
+      - sus_sqlserver_production:/var/opt/mssql
+    networks:
+      - sus_network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cidades-esg-api-production
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: ${ASPNETCORE_URLS:-http://+:8080}
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=SusDbProduction;User Id=${SQLSERVER_USER:-sa};Password=${SQLSERVER_PASSWORD:-Sus@123456};TrustServerCertificate=True"
+      Jwt__Issuer: ${JWT_ISSUER:-Sus.Api}
+      Jwt__Audience: ${JWT_AUDIENCE:-Sus.Api}
+      Jwt__Secret: ${JWT_SECRET:-segredo-super-seguro-para-sus-api-dotnet-8}
+      AppUser__Username: ${APP_USERNAME:-admin}
+      AppUser__Password: ${APP_PASSWORD:-admin123}
+    ports:
+      - "8082:8080"
+    depends_on:
+      - sqlserver
+    restart: unless-stopped
+    networks:
+      - sus_network
+
+volumes:
+  sus_sqlserver_production:
+
+networks:
+  sus_network:
+    driver: bridge

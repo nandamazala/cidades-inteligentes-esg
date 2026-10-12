@@ -1,0 +1,12 @@
+bin/
+obj/
+TestResults/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.zip
+*.mdf
+*.ldf
+work-publish-check/

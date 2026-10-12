@@ -1,0 +1,148 @@
+name: CI/CD - Cidades ESG Inteligentes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: "8.0.x"
+  IMAGE_NAME: cidades-esg-api
+
+jobs:
+  build-test:
+    name: Build e testes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restaurar dependencias
+        run: dotnet restore SusNet8.sln
+
+      - name: Build Release
+        run: dotnet build SusNet8.sln --configuration Release --no-restore
+
+      - name: Testes automatizados
+        run: dotnet test SusNet8.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
+
+      - name: Publicar resultado dos testes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: "**/TestResults/*.trx"
+
+  docker-image:
+    name: Build da imagem Docker
+    runs-on: ubuntu-latest
+    needs: build-test
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Validar Compose
+        run: docker compose --env-file .env.example config --quiet
+
+      - name: Build da imagem
+        run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} .
+
+      - name: Salvar pacote da imagem
+        run: docker save ${{ env.IMAGE_NAME }}:${{ github.sha }} -o cidades-esg-api.tar
+
+      - name: Publicar imagem como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: cidades-esg-api.tar
+
+  deploy-staging:
+    name: Deploy staging
+    runs-on: ubuntu-latest
+    needs: docker-image
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: staging
+      url: http://localhost:8081/health
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Validar configuracao de staging
+        run: docker compose --env-file .env.example -f docker-compose.staging.yml config --quiet
+
+      - name: Executar deploy de staging
+        run: |
+          mkdir -p deploy-logs
+          docker compose --env-file .env.example -f docker-compose.staging.yml up -d --build
+          for attempt in {1..36}; do
+            if curl --fail --silent http://localhost:8081/health > deploy-logs/staging-health.json; then
+              echo "Deploy staging validado em http://localhost:8081/health" | tee deploy-logs/staging.txt
+              docker compose --env-file .env.example -f docker-compose.staging.yml ps >> deploy-logs/staging.txt
+              exit 0
+            fi
+            echo "Aguardando staging ficar disponivel... tentativa ${attempt}/36"
+            sleep 5
+          done
+          docker compose --env-file .env.example -f docker-compose.staging.yml ps > deploy-logs/staging.txt
+          docker compose --env-file .env.example -f docker-compose.staging.yml logs --no-color > deploy-logs/staging-compose.log
+          exit 1
+
+      - name: Publicar evidencia de staging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-staging
+          path: deploy-logs/
+
+  deploy-production:
+    name: Deploy producao
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: http://localhost:8082/health
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Validar configuracao de producao
+        run: docker compose --env-file .env.example -f docker-compose.production.yml config --quiet
+
+      - name: Executar deploy de producao
+        run: |
+          mkdir -p deploy-logs
+          docker compose --env-file .env.example -f docker-compose.production.yml up -d --build
+          for attempt in {1..36}; do
+            if curl --fail --silent http://localhost:8082/health > deploy-logs/production-health.json; then
+              echo "Deploy producao validado em http://localhost:8082/health" | tee deploy-logs/production.txt
+              docker compose --env-file .env.example -f docker-compose.production.yml ps >> deploy-logs/production.txt
+              exit 0
+            fi
+            echo "Aguardando producao ficar disponivel... tentativa ${attempt}/36"
+            sleep 5
+          done
+          docker compose --env-file .env.example -f docker-compose.production.yml ps > deploy-logs/production.txt
+          docker compose --env-file .env.example -f docker-compose.production.yml logs --no-color > deploy-logs/production-compose.log
+          exit 1
+
+      - name: Publicar evidencia de producao
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-production
+          path: deploy-logs/
