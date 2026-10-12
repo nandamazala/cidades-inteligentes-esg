@@ -4,6 +4,16 @@ API REST em ASP.NET Core 8 criada a partir do projeto anterior de gestão de ate
 
 O contexto ESG aparece no eixo social: a aplicação apoia o controle de atendimentos, pacientes, unidades de saúde e alertas de capacidade, ajudando uma cidade inteligente a monitorar a qualidade do atendimento público.
 
+## Integrantes
+
+| RM | Nome |
+| --- | --- |
+| RM565177 | Débora dos Santos de Mattos Martins |
+| RM561750 | Pamela Nascimento Chern |
+| RM562662 | Fernanda Mazala Paulo |
+| RM561313 | Douglas Aparecido Fernandes |
+| RM563917 | Ana Beatriz de Oliveira Costa |
+
 ## Como executar localmente com Docker
 
 1. Copie o arquivo de exemplo de variáveis:
