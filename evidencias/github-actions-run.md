@@ -6,22 +6,22 @@ https://github.com/nandamazala/cidades-inteligentes-esg
 
 Run do pipeline:
 
-https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977
+https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699
 
 Commit executado:
 
 ```text
-d0075f4d33facef634043819af4b2805db5267f7
+18df707442efe5f6e329bdbba320095eb2486d43
 ```
 
 ## Jobs executados
 
 | Job | Status | Link |
 | --- | --- | --- |
-| Build e testes | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050128480 |
-| Build da imagem Docker | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050276202 |
-| Deploy staging | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050468985 |
-| Deploy produção | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050749386 |
+| Build e testes | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115051624857 |
+| Build da imagem Docker | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115051749641 |
+| Deploy staging | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115051930084 |
+| Deploy produção | success | https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115052224395 |
 
 ## Artefatos publicados
 

@@ -168,11 +168,11 @@ Resultado esperado: imagem Docker criada com sucesso.
 
 Evidências reais do pipeline no GitHub Actions:
 
-- Execução completa do workflow: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977
-- Build e testes aprovados: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050128480
-- Build da imagem Docker aprovado: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050276202
-- Deploy staging aprovado com `/health`: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050468985
-- Deploy produção aprovado com `/health`: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321415977/job/115050749386
+- Execução completa do workflow: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699
+- Build e testes aprovados: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115051624857
+- Build da imagem Docker aprovado: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115051749641
+- Deploy staging aprovado com `/health`: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115051930084
+- Deploy produção aprovado com `/health`: https://github.com/nandamazala/cidades-inteligentes-esg/actions/runs/38321882699/job/115052224395
 
 Artefatos publicados pelo workflow:
 
